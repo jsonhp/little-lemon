@@ -7,6 +7,9 @@ import { useEffect, useState } from "react";
 import SplashScreen from "./screens/splash";
 import Error from "./screens/error";
 import { useFonts } from "expo-font";
+import Home from "./screens/home";
+import Header from "./components/header";
+import Avatar from "./screens/avatar";
 
 const Stack = createNativeStackNavigator();
 
@@ -51,12 +54,28 @@ export default function App() {
     <NavigationContainer>
       <Stack.Navigator>
         {isLoggedIn ? (
-          <Stack.Screen
-            name="Profile"
-            component={() => (
-              <Profile setIsOnboardingCompleted={setIsOnboardingCompleted} />
-            )}
-          />
+          <>
+            <Stack.Screen
+              name="Home"
+              options={{
+                headerTitle: (props) => <Header />,
+                headerRight: () => <Avatar />,
+                headerTitleAlign: "center",
+              }}
+              component={Home}
+            />
+            <Stack.Screen
+              name="Profile"
+              options={{
+                headerTitle: (props) => <Header />,
+                headerRight: () => <Avatar />,
+                headerTitleAlign: "center",
+              }}
+              component={() => (
+                <Profile setIsOnboardingCompleted={setIsOnboardingCompleted} />
+              )}
+            />
+          </>
         ) : (
           <Stack.Screen
             name="OnBoarding"

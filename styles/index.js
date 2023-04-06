@@ -7,6 +7,7 @@ const fonts = () => ({
 
 const commonStyles = StyleSheet.create({
   primaryColor: "#495E57",
+  primaryAccentColor: "#c2d0cb",
   secondaryColor: "#F4CE14",
   tertiaryColor: "#EE9972",
   quaternaryColor: "#FBDABB",

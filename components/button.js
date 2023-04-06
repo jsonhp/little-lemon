@@ -9,6 +9,7 @@ export default function Button({
   primary,
   defaultButton,
   full,
+  styles,
 }) {
   const getBackgroundColor = () => {
     if (disabled) {
@@ -32,12 +33,14 @@ export default function Button({
         borderRadius: 20,
         backgroundColor: getBackgroundColor(),
         borderWidth: defaultButton ? 1 : 0,
+        ...styles?.container,
       }}
     >
       <Text
         style={{
           ...commonStyles.lead,
           color: defaultButton ? commonStyles.defaultColor : "white",
+          ...styles?.label,
         }}
       >
         {title}

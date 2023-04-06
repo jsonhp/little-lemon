@@ -26,7 +26,17 @@ export default function Profile({ navigation, setIsOnboardingCompleted }) {
 
   const getData = async () => {
     try {
-      const data = await AsyncStorage.multiGet(["firstName", "email"]);
+      const data = await AsyncStorage.multiGet([
+        "firstName",
+        "lastName",
+        "email",
+        "phoneNumber",
+        "image",
+        "orderNotifications",
+        "passwordNotifications",
+        "offersNotifications",
+        "newsletterNotifications",
+      ]);
       data.forEach(([key, value]) => {
         value && setProfile((prev) => ({ ...prev, [key]: value }));
       });
@@ -66,7 +76,7 @@ export default function Profile({ navigation, setIsOnboardingCompleted }) {
   const onHandleValue = (key, text) => {
     setProfile((prev) => ({
       ...prev,
-      [key]: key.includes("Notifications") ? !prev[key] : text,
+      [key]: key.includes("Notifications") ? !mapBoolean(prev[key]) : text,
     }));
   };
 
@@ -94,6 +104,11 @@ export default function Profile({ navigation, setIsOnboardingCompleted }) {
       setError(true);
     }
   };
+
+  const mapBoolean = (value) =>
+    typeof value === "boolean"
+      ? value
+      : Boolean(value === "false" ? "" : value);
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
@@ -162,28 +177,28 @@ export default function Profile({ navigation, setIsOnboardingCompleted }) {
         <Text>Email notifications</Text>
         <View style={styles.dataEmailInputContainer}>
           <Switch
-            value={profile.orderNotifications}
+            value={mapBoolean(profile.orderNotifications)}
             onChange={() => onHandleValue("orderNotifications")}
           />
           <Text>Order statuses</Text>
         </View>
         <View style={styles.dataEmailInputContainer}>
           <Switch
-            value={profile.passwordNotifications}
+            value={mapBoolean(profile.passwordNotifications)}
             onChange={() => onHandleValue("passwordNotifications")}
           />
           <Text>Password changes</Text>
         </View>
         <View style={styles.dataEmailInputContainer}>
           <Switch
-            value={profile.offersNotifications}
+            value={mapBoolean(profile.offersNotifications)}
             onChange={() => onHandleValue("offersNotifications")}
           />
           <Text>Special offers</Text>
         </View>
         <View style={styles.dataEmailInputContainer}>
           <Switch
-            value={profile.newsletterNotifications}
+            value={mapBoolean(profile.newsletterNotifications)}
             onChange={() => onHandleValue("newsletterNotifications")}
           />
           <Text>Newsletter</Text>
